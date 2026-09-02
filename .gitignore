@@ -1,4 +1,5 @@
-.venv
-odoo-c
-odoo-e
+.venv/
+.vscode/
+odoo-c/
+odoo-e/
 source-code/
