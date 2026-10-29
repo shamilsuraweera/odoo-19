@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hospital_medicine_list" model="ir.ui.view">
+        <field name="name">hospital.medicine.list</field>
+        <field name="model">hospital.medicine</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="stock_qty &lt; 10" decoration-warning="stock_qty &lt; 20">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="dosage_form"/>
+                <field name="unit_price"/>
+                <field name="stock_qty"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hospital_medicine_form" model="ir.ui.view">
+        <field name="name">hospital.medicine.form</field>
+        <field name="model">hospital.medicine</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="dosage_form"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="unit_price"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="stock_qty"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Usage notes, contraindications..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_medicine_search" model="ir.ui.view">
+        <field name="name">hospital.medicine.search</field>
+        <field name="model">hospital.medicine</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <filter name="low_stock" string="Low Stock" domain="[('stock_qty', '&lt;', 20)]"/>
+                <group>
+                    <filter name="group_form" string="Dosage Form" context="{'group_by': 'dosage_form'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hospital_medicine" model="ir.actions.act_window">
+        <field name="name">Medicines</field>
+        <field name="res_model">hospital.medicine</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

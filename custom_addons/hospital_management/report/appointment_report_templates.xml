@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_appointment_summary_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[:1]"/>
+                <div class="page">
+                    <h2>Appointment Summary</h2>
+                    <p>
+                        <strong t-out="len(docs)"/> appointment(s) between
+                        <strong t-out="min(docs.mapped('start_datetime')).date()"/> and
+                        <strong t-out="max(docs.mapped('start_datetime')).date()"/>
+                    </p>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Status</th>
+                                <th class="text-end">Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="docs" t-as="appointment">
+                                <td><span t-field="appointment.name"/></td>
+                                <td><span t-field="appointment.start_datetime"/></td>
+                                <td><span t-field="appointment.patient_id.name"/></td>
+                                <td><span t-field="appointment.doctor_id.name"/></td>
+                                <td><span t-field="appointment.state"/></td>
+                                <td class="text-end"><span t-field="appointment.fee"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-end">
+                        <strong>Total fees: <span t-out="sum(docs.mapped('fee'))" t-options="{'widget': 'monetary', 'display_currency': docs[:1].currency_id}"/></strong>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

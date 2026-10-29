@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_prescription_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Prescription <span t-field="o.name"/></h2>
+                        <div class="row mt-3 mb-3">
+                            <div class="col-6">
+                                <strong>Patient:</strong> <span t-field="o.patient_id.name"/><br/>
+                                <strong>Patient ID:</strong> <span t-field="o.patient_id.ref"/><br/>
+                                <strong>Age / Gender:</strong>
+                                <span t-field="o.patient_id.age"/> / <span t-field="o.patient_id.gender"/><br/>
+                                <t t-if="o.patient_id.allergies">
+                                    <strong>Allergies:</strong> <span t-field="o.patient_id.allergies"/>
+                                </t>
+                            </div>
+                            <div class="col-6">
+                                <strong>Doctor:</strong> Dr. <span t-field="o.doctor_id.name"/><br/>
+                                <strong>Department:</strong> <span t-field="o.doctor_id.department_id.name"/><br/>
+                                <strong>Date:</strong> <span t-field="o.date"/>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Medicine</th>
+                                    <th>Dosage</th>
+                                    <th class="text-end">Days</th>
+                                    <th class="text-end">Qty</th>
+                                    <th class="text-end">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td><span t-field="line.medicine_id.name"/></td>
+                                    <td><span t-field="line.dosage"/></td>
+                                    <td class="text-end"><span t-field="line.days"/></td>
+                                    <td class="text-end"><span t-field="line.quantity"/></td>
+                                    <td class="text-end"><span t-field="line.subtotal"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-end">
+                            <strong>Total: <span t-field="o.total_amount"/></strong>
+                        </div>
+
+                        <div t-if="o.notes" class="mt-4">
+                            <strong>Instructions</strong>
+                            <p t-field="o.notes"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

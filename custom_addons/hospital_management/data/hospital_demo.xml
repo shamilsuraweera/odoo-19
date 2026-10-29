@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Departments -->
+    <record id="demo_dept_cardiology" model="hospital.department">
+        <field name="name">Cardiology</field>
+        <field name="code">CARD</field>
+        <field name="color">1</field>
+    </record>
+    <record id="demo_dept_pediatrics" model="hospital.department">
+        <field name="name">Pediatrics</field>
+        <field name="code">PED</field>
+        <field name="color">4</field>
+    </record>
+    <record id="demo_dept_orthopedics" model="hospital.department">
+        <field name="name">Orthopedics</field>
+        <field name="code">ORTH</field>
+        <field name="color">7</field>
+    </record>
+
+    <!-- Doctors -->
+    <record id="demo_doctor_perera" model="hospital.doctor">
+        <field name="name">Nimal Perera</field>
+        <field name="department_id" ref="demo_dept_cardiology"/>
+        <field name="specialization">Cardiologist</field>
+        <field name="qualification">MBBS, MD</field>
+        <field name="phone">+94 77 100 0001</field>
+        <field name="email">nimal.perera@example.com</field>
+        <field name="consultation_fee">3500</field>
+        <field name="user_id" ref="base.user_demo"/>
+    </record>
+    <record id="demo_doctor_fernando" model="hospital.doctor">
+        <field name="name">Anusha Fernando</field>
+        <field name="department_id" ref="demo_dept_pediatrics"/>
+        <field name="specialization">Pediatrician</field>
+        <field name="qualification">MBBS, DCH</field>
+        <field name="phone">+94 77 100 0002</field>
+        <field name="email">anusha.fernando@example.com</field>
+        <field name="consultation_fee">2500</field>
+    </record>
+    <record id="demo_doctor_silva" model="hospital.doctor">
+        <field name="name">Kamal Silva</field>
+        <field name="department_id" ref="demo_dept_orthopedics"/>
+        <field name="specialization">Orthopedic Surgeon</field>
+        <field name="qualification">MBBS, MS</field>
+        <field name="phone">+94 77 100 0003</field>
+        <field name="email">kamal.silva@example.com</field>
+        <field name="consultation_fee">4000</field>
+    </record>
+
+    <function model="hospital.department" name="write">
+        <value eval="[ref('demo_dept_cardiology')]"/>
+        <value eval="{'head_doctor_id': ref('demo_doctor_perera')}"/>
+    </function>
+
+    <!-- Tags -->
+    <record id="demo_tag_diabetic" model="hospital.patient.tag">
+        <field name="name">Diabetic</field>
+        <field name="color">1</field>
+    </record>
+    <record id="demo_tag_vip" model="hospital.patient.tag">
+        <field name="name">VIP</field>
+        <field name="color">5</field>
+    </record>
+    <record id="demo_tag_senior" model="hospital.patient.tag">
+        <field name="name">Senior</field>
+        <field name="color">3</field>
+    </record>
+
+    <!-- Patients -->
+    <record id="demo_patient_1" model="hospital.patient">
+        <field name="name">Saman Kumara</field>
+        <field name="birth_date" eval="(DateTime.now() - relativedelta(years=58)).strftime('%Y-%m-%d')"/>
+        <field name="gender">male</field>
+        <field name="blood_group">o+</field>
+        <field name="phone">+94 71 200 0001</field>
+        <field name="email">saman.kumara@example.com</field>
+        <field name="height">172</field>
+        <field name="weight">84</field>
+        <field name="allergies">Penicillin</field>
+        <field name="chronic_conditions">Hypertension, Type 2 diabetes</field>
+        <field name="tag_ids" eval="[(6, 0, [ref('demo_tag_diabetic'), ref('demo_tag_senior')])]"/>
+    </record>
+    <record id="demo_patient_2" model="hospital.patient">
+        <field name="name">Dilini Wickramasinghe</field>
+        <field name="birth_date" eval="(DateTime.now() - relativedelta(years=7)).strftime('%Y-%m-%d')"/>
+        <field name="gender">female</field>
+        <field name="blood_group">a+</field>
+        <field name="phone">+94 71 200 0002</field>
+        <field name="email">dilini.w@example.com</field>
+        <field name="height">122</field>
+        <field name="weight">23</field>
+    </record>
+    <record id="demo_patient_3" model="hospital.patient">
+        <field name="name">Ruwan Jayasuriya</field>
+        <field name="birth_date" eval="(DateTime.now() - relativedelta(years=34)).strftime('%Y-%m-%d')"/>
+        <field name="gender">male</field>
+        <field name="blood_group">b+</field>
+        <field name="phone">+94 71 200 0003</field>
+        <field name="email">ruwan.j@example.com</field>
+        <field name="height">178</field>
+        <field name="weight">76</field>
+        <field name="tag_ids" eval="[(6, 0, [ref('demo_tag_vip')])]"/>
+    </record>
+    <record id="demo_patient_4" model="hospital.patient">
+        <field name="name">Malini Rathnayake</field>
+        <field name="birth_date" eval="(DateTime.now() - relativedelta(years=45)).strftime('%Y-%m-%d')"/>
+        <field name="gender">female</field>
+        <field name="blood_group">ab-</field>
+        <field name="phone">+94 71 200 0004</field>
+        <field name="email">malini.r@example.com</field>
+        <field name="height">160</field>
+        <field name="weight">62</field>
+    </record>
+
+    <!-- Medicines -->
+    <record id="demo_medicine_paracetamol" model="hospital.medicine">
+        <field name="name">Paracetamol 500mg</field>
+        <field name="code">MED-001</field>
+        <field name="dosage_form">tablet</field>
+        <field name="unit_price">5</field>
+        <field name="stock_qty">500</field>
+    </record>
+    <record id="demo_medicine_amoxicillin" model="hospital.medicine">
+        <field name="name">Amoxicillin 250mg</field>
+        <field name="code">MED-002</field>
+        <field name="dosage_form">capsule</field>
+        <field name="unit_price">18</field>
+        <field name="stock_qty">120</field>
+    </record>
+    <record id="demo_medicine_cough_syrup" model="hospital.medicine">
+        <field name="name">Cough Syrup 100ml</field>
+        <field name="code">MED-003</field>
+        <field name="dosage_form">syrup</field>
+        <field name="unit_price">650</field>
+        <field name="stock_qty">15</field>
+    </record>
+    <record id="demo_medicine_atorvastatin" model="hospital.medicine">
+        <field name="name">Atorvastatin 20mg</field>
+        <field name="code">MED-004</field>
+        <field name="dosage_form">tablet</field>
+        <field name="unit_price">32</field>
+        <field name="stock_qty">200</field>
+    </record>
+
+    <!-- Appointments: past (done), today and upcoming -->
+    <record id="demo_appointment_done" model="hospital.appointment">
+        <field name="patient_id" ref="demo_patient_1"/>
+        <field name="doctor_id" ref="demo_doctor_perera"/>
+        <field name="start_datetime" eval="(DateTime.now() - timedelta(days=3)).replace(hour=9, minute=0, second=0)"/>
+        <field name="duration">0.5</field>
+        <field name="reason">Chest pain follow-up</field>
+        <field name="diagnosis">Stable angina, adjust medication</field>
+        <field name="priority">2</field>
+        <field name="state">done</field>
+    </record>
+    <record id="demo_appointment_done_2" model="hospital.appointment">
+        <field name="patient_id" ref="demo_patient_2"/>
+        <field name="doctor_id" ref="demo_doctor_fernando"/>
+        <field name="start_datetime" eval="(DateTime.now() - timedelta(days=10)).replace(hour=10, minute=0, second=0)"/>
+        <field name="duration">0.5</field>
+        <field name="reason">Fever and cough</field>
+        <field name="diagnosis">Viral upper respiratory infection</field>
+        <field name="state">done</field>
+    </record>
+    <record id="demo_appointment_progress" model="hospital.appointment">
+        <field name="patient_id" ref="demo_patient_3"/>
+        <field name="doctor_id" ref="demo_doctor_silva"/>
+        <field name="start_datetime" eval="DateTime.now().replace(minute=0, second=0)"/>
+        <field name="duration">1</field>
+        <field name="reason">Knee pain</field>
+        <field name="priority">1</field>
+        <field name="state">in_consultation</field>
+    </record>
+    <record id="demo_appointment_confirmed" model="hospital.appointment">
+        <field name="patient_id" ref="demo_patient_4"/>
+        <field name="doctor_id" ref="demo_doctor_perera"/>
+        <field name="start_datetime" eval="(DateTime.now() + timedelta(days=1)).replace(hour=11, minute=0, second=0)"/>
+        <field name="duration">0.5</field>
+        <field name="reason">Routine heart check</field>
+        <field name="state">confirmed</field>
+    </record>
+    <record id="demo_appointment_draft" model="hospital.appointment">
+        <field name="patient_id" ref="demo_patient_2"/>
+        <field name="doctor_id" ref="demo_doctor_fernando"/>
+        <field name="start_datetime" eval="(DateTime.now() + timedelta(days=2)).replace(hour=14, minute=0, second=0)"/>
+        <field name="duration">0.5</field>
+        <field name="reason">Vaccination</field>
+        <field name="state">draft</field>
+    </record>
+
+    <!-- Prescriptions -->
+    <record id="demo_prescription_1" model="hospital.prescription">
+        <field name="appointment_id" ref="demo_appointment_done"/>
+        <field name="notes">Low-salt diet. Review in 4 weeks.</field>
+    </record>
+    <record id="demo_prescription_line_1" model="hospital.prescription.line">
+        <field name="prescription_id" ref="demo_prescription_1"/>
+        <field name="medicine_id" ref="demo_medicine_atorvastatin"/>
+        <field name="dosage">1 tablet at night</field>
+        <field name="days">30</field>
+        <field name="quantity">30</field>
+    </record>
+    <record id="demo_prescription_2" model="hospital.prescription">
+        <field name="appointment_id" ref="demo_appointment_done_2"/>
+        <field name="notes">Plenty of fluids and rest.</field>
+    </record>
+    <record id="demo_prescription_line_2" model="hospital.prescription.line">
+        <field name="prescription_id" ref="demo_prescription_2"/>
+        <field name="medicine_id" ref="demo_medicine_paracetamol"/>
+        <field name="dosage">1 tablet every 8 hours</field>
+        <field name="days">3</field>
+        <field name="quantity">9</field>
+    </record>
+    <record id="demo_prescription_line_3" model="hospital.prescription.line">
+        <field name="prescription_id" ref="demo_prescription_2"/>
+        <field name="medicine_id" ref="demo_medicine_cough_syrup"/>
+        <field name="dosage">5 ml twice a day</field>
+        <field name="days">5</field>
+        <field name="quantity">1</field>
+    </record>
+    <function model="hospital.prescription" name="action_issue">
+        <value eval="[ref('demo_prescription_1'), ref('demo_prescription_2')]"/>
+    </function>
+</odoo>
