@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="hospital_management.Dashboard">
+        <div class="o_hospital_dashboard o_action overflow-auto p-4">
+            <h2 class="mb-4">Hospital Dashboard</h2>
+            <div class="row g-3">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="o_hospital_card card text-bg-primary" t-on-click="() => this.openAppointments('Today', state.data.today_domain)">
+                        <div class="card-body">
+                            <div class="o_hospital_value" t-out="state.data.today"/>
+                            <div>Appointments today</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="o_hospital_card card text-bg-info" t-on-click="() => this.openAppointments('Confirmed', [['state', '=', 'confirmed']])">
+                        <div class="card-body">
+                            <div class="o_hospital_value" t-out="state.data.confirmed"/>
+                            <div>Confirmed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="o_hospital_card card text-bg-warning" t-on-click="() => this.openAppointments('In consultation', [['state', '=', 'in_consultation']])">
+                        <div class="card-body">
+                            <div class="o_hospital_value" t-out="state.data.in_consultation"/>
+                            <div>In consultation</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="o_hospital_card card text-bg-success" t-on-click="() => this.openAppointments('Done', [['state', '=', 'done']])">
+                        <div class="card-body">
+                            <div class="o_hospital_value" t-out="state.data.done"/>
+                            <div>Completed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="o_hospital_card card" t-on-click="() => this.openModel('Patients', 'hospital.patient')">
+                        <div class="card-body">
+                            <div class="o_hospital_value" t-out="state.data.patients"/>
+                            <div>Patients</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="o_hospital_card card" t-on-click="() => this.openModel('Doctors', 'hospital.doctor')">
+                        <div class="card-body">
+                            <div class="o_hospital_value" t-out="state.data.doctors"/>
+                            <div>Doctors</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="o_hospital_card card text-bg-danger" t-on-click="() => this.openModel('Low stock medicines', 'hospital.medicine', [['stock_qty', '&lt;', 20]])">
+                        <div class="card-body">
+                            <div class="o_hospital_value" t-out="state.data.low_stock"/>
+                            <div>Medicines low on stock</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

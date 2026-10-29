@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mail_template_appointment_confirmation" model="mail.template">
+        <field name="name">Hospital: Appointment Confirmation</field>
+        <field name="model_id" ref="model_hospital_appointment"/>
+        <field name="subject">Appointment {{ object.name }} confirmed</field>
+        <field name="email_from">{{ (object.doctor_id.email or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.patient_id.email }}</field>
+        <field name="description">Sent to the patient when an appointment is confirmed</field>
+        <field name="body_html" type="html">
+<div style="margin: 0; padding: 0; font-size: 14px;">
+    <p>Dear <t t-out="object.patient_id.name or ''">Patient</t>,</p>
+    <p>
+        Your appointment with <strong>Dr. <t t-out="object.doctor_id.name or ''">Doctor</t></strong>
+        (<t t-out="object.department_id.name or ''">Department</t>) is confirmed for
+        <strong><t t-out="format_datetime(object.start_datetime, dt_format='medium')">Date</t></strong>.
+    </p>
+    <p>Reference: <t t-out="object.name or ''">APT/0001</t></p>
+    <p>Please arrive 10 minutes early. Thank you.</p>
+</div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <record id="mail_template_appointment_reminder" model="mail.template">
+        <field name="name">Hospital: Appointment Reminder</field>
+        <field name="model_id" ref="model_hospital_appointment"/>
+        <field name="subject">Reminder: appointment {{ object.name }} tomorrow</field>
+        <field name="email_from">{{ (object.doctor_id.email or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.patient_id.email }}</field>
+        <field name="description">Sent by the daily scheduled action to patients with an upcoming appointment</field>
+        <field name="body_html" type="html">
+<div style="margin: 0; padding: 0; font-size: 14px;">
+    <p>Dear <t t-out="object.patient_id.name or ''">Patient</t>,</p>
+    <p>
+        This is a reminder of your appointment with Dr. <t t-out="object.doctor_id.name or ''">Doctor</t>
+        on <strong><t t-out="format_datetime(object.start_datetime, dt_format='medium')">Date</t></strong>.
+    </p>
+</div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>
